@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1"
+          xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="projet3.controller.ChooseModeController">
+    <AnchorPane prefHeight="380.0" prefWidth="431.0">
+        <Button fx:id="duel" layoutX="65.0" layoutY="63.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="302.0"
+                text="DUEL" onAction="#chooseDuel"/>
+        <Button fx:id="challenger" layoutX="65.0" layoutY="228.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="302.0"
+                text="challenger" onAction="#chooseChallenger"/>
+        <Button fx:id="defenseur" layoutX="65.0" layoutY="393.0" mnemonicParsing="false" prefHeight="127.0" prefWidth="302.0"
+                text="defenseur" onAction="#chooseDefenseur"/>
+        <Label alignment="CENTER" layoutX="61.0" layoutY="23.0" prefHeight="34.0" prefWidth="311.0"
+               text="Choisissez un jeu" textAlignment="RIGHT"/>
+    </AnchorPane>
+</GridPane>
