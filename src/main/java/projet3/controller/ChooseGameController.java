@@ -13,7 +13,7 @@ import projet3.model.GameMastermind;
 import projet3.model.GameRecherche;
 
 
-public class ChooseController {
+public class ChooseGameController {
 
     public Button search;
     public Button mastermind;
@@ -25,6 +25,7 @@ public class ChooseController {
         gameFactory.setGame(game);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/chooseMode.fxml"));
+        //on récupère la fenêtre
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setUserData(gameFactory);
         Scene scene = new Scene((Parent) loader.load());

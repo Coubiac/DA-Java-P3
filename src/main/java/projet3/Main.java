@@ -5,8 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 
 public class Main extends Application {
+
+
+    private static final Logger logger = (Logger) LogManager.getLogger("Main");
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -18,6 +23,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        logger.info("Did it again!");
         launch(args);
     }
 }
