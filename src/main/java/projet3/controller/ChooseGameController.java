@@ -12,7 +12,6 @@ import projet3.model.GameFactory;
 import projet3.model.GameMastermind;
 import projet3.model.GameRecherche;
 
-
 public class ChooseGameController {
 
     public Button search;
@@ -20,13 +19,15 @@ public class ChooseGameController {
 
     @FXML
     public void chooseRecherche(ActionEvent actionEvent) throws Exception {
-        GameRecherche game = new GameRecherche();
-        GameFactory gameFactory = new GameFactory();
-        gameFactory.setGame(game);
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/chooseMode.fxml"));
+
         //on récupère la fenêtre
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        //on récupère les données
+        GameFactory gameFactory = (GameFactory) stage.getUserData();
+        GameRecherche game = new GameRecherche();
+        gameFactory.setGame(game);
+
         stage.setUserData(gameFactory);
         Scene scene = new Scene((Parent) loader.load());
         stage.setScene(scene);
@@ -35,12 +36,15 @@ public class ChooseGameController {
 
     @FXML
     public void chooseMasterMind(ActionEvent actionEvent) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/chooseMode.fxml"));
+
+        //on récupère la fenêtre
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        //on récupère les données
+        GameFactory gameFactory = (GameFactory) stage.getUserData();
         GameMastermind game = new GameMastermind();
-        GameFactory gameFactory= new GameFactory();
         gameFactory.setGame(game);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/chooseMode.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setUserData(gameFactory);
         Scene scene = new Scene((Parent) loader.load());
         stage.setScene(scene);

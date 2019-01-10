@@ -1,5 +1,8 @@
 package projet3.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+
 import java.util.Random;
 
 public class GameRecherche extends Game {
@@ -11,6 +14,7 @@ public class GameRecherche extends Game {
         return "RECHERCHE";
     }
 
+    private static final Logger logger = (Logger) LogManager.getLogger("GameRecherche");
 
     public GameRecherche(){
         this.solution = new char[5];
@@ -19,14 +23,12 @@ public class GameRecherche extends Game {
         for(int i = 0; i < solution.length; i++){
             this.solution[i] = alphabet.charAt(r.nextInt(alphabet.length()));
         }
+
+        logger.info("la solution est: " + this.ShowSoluce());
     }
 
     public String ShowSoluce(){
-        StringBuilder solution = new StringBuilder();
-        for (char aSolution : this.solution) {
-            solution.append(aSolution);
-        }
-        return solution.toString();
+        return new String(this.solution);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class GameRecherche extends Game {
             }
 
         }
-        if (reponse.toString() == "=====")
+        if (reponse.toString().equals("====="))
         {
             return "Gagné !";
         }

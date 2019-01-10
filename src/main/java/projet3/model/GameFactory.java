@@ -1,24 +1,19 @@
 package projet3.model;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
-public class GameFactory extends Application {
+public class GameFactory  {
 
     private Game game;
     private Mode mode;
+    private Boolean debugMode;
+    private int nbChiffres;
 
 
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/chooseMode.fxml"));
-        primaryStage.setTitle("Game P3");
-        primaryStage.setScene(new Scene(root, 431, 380));
-        primaryStage.show();
+    public GameFactory(){
+        this.readProperties();
     }
 
     public Game getGame() {
@@ -37,6 +32,32 @@ public class GameFactory extends Application {
         this.mode = mode;
     }
 
+    public Boolean isDebugMode() {
+        return debugMode;
+    }
 
+    private void readProperties(){
+        Properties prop = new Properties();
+        InputStream input = null;
+        try {
 
+            input = ClassLoader.getSystemClassLoader().getResourceAsStream("config.properties");
+            prop.load(input);
+
+            // Verification si débug mode est activé
+            this.debugMode = Boolean.parseBoolean(prop.getProperty("debugMode"));
+            this.nbChiffres = Integer.parseInt(prop.getProperty("nbChiffresRecherche"));
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

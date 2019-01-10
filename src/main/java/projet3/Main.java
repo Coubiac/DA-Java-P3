@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
+import projet3.model.GameFactory;
 
 public class Main extends Application {
 
@@ -15,6 +16,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        GameFactory gameFactory = new GameFactory();
+        primaryStage.setUserData(gameFactory);
         Parent root = FXMLLoader.load(getClass().getResource("/chooseGame.fxml"));
         primaryStage.setTitle("Game P3");
         primaryStage.setScene(new Scene(root, 431, 380));
@@ -23,7 +26,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        logger.info("Did it again!");
+        logger.info("Demarrage de l'application!");
         launch(args);
     }
 }

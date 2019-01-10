@@ -23,6 +23,6 @@ public class RechercheGameController {
         stage.setTitle(game.toString());
 
         String propalSoluce = propal.getText();
-        result.setText(game.checkSoluce(propalSoluce)+ game.ShowSoluce());
+        result.setText(game.checkSoluce(propalSoluce));
     }
 }
