@@ -25,7 +25,7 @@ public class ChooseModeController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         GameFactory gameFactory = (GameFactory) stage.getUserData();
         gameFactory.setMode(new DuelMode());
-        if(gameFactory.isDebugMode()){
+        if(gameFactory.getGame().isDebugMode()){
             logger.info("Mode Duel !");
         }
 
@@ -49,7 +49,7 @@ public class ChooseModeController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         GameFactory gameFactory = (GameFactory) stage.getUserData();
         gameFactory.setMode(new ChallengerMode());
-        if(gameFactory.isDebugMode()){
+        if(gameFactory.getGame().isDebugMode()){
             logger.info("Mode Challenger !");
         }
 
@@ -60,7 +60,7 @@ public class ChooseModeController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         GameFactory gameFactory = (GameFactory) stage.getUserData();
         gameFactory.setMode(new DefenseurMode());
-        if(gameFactory.isDebugMode()){
+        if(gameFactory.getGame().isDebugMode()){
             logger.info("Mode Défenseur !");
         }
 

@@ -24,9 +24,10 @@ public class ChooseGameController {
         //on récupère la fenêtre
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         //on récupère les données
-        GameFactory gameFactory = (GameFactory) stage.getUserData();
         GameRecherche game = new GameRecherche();
+        GameFactory gameFactory = (GameFactory) stage.getUserData();
         gameFactory.setGame(game);
+
 
         stage.setUserData(gameFactory);
         Scene scene = new Scene((Parent) loader.load());
@@ -41,8 +42,8 @@ public class ChooseGameController {
         //on récupère la fenêtre
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         //on récupère les données
-        GameFactory gameFactory = (GameFactory) stage.getUserData();
         GameMastermind game = new GameMastermind();
+        GameFactory gameFactory = (GameFactory) stage.getUserData();
         gameFactory.setGame(game);
 
         stage.setUserData(gameFactory);

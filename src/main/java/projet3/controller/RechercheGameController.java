@@ -13,6 +13,7 @@ public class RechercheGameController {
     public Label result;
     public TextField propal;
     public Button submit;
+    public Label error;
 
 
     public void submit(ActionEvent actionEvent) {
@@ -23,6 +24,7 @@ public class RechercheGameController {
         stage.setTitle(game.toString());
 
         String propalSoluce = propal.getText();
-        result.setText(game.checkSoluce(propalSoluce));
+        result.setText(game.checkPropal(propalSoluce));
+        error.setText(game.showError());
     }
 }
