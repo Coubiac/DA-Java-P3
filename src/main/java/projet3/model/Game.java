@@ -1,5 +1,8 @@
 package projet3.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -10,6 +13,8 @@ public abstract class Game implements GameInterface{
     private Integer nbEssais;
     private Boolean debugMode;
     private String error = null;
+    static final Logger logger = (Logger) LogManager.getLogger("Game");
+
 
     @Override
     public String ShowSoluce() {

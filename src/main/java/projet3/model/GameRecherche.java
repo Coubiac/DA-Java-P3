@@ -1,12 +1,13 @@
 package projet3.model;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Logger;
 import java.util.Random;
+import org.apache.commons.lang3.StringUtils;
 
 public class GameRecherche extends Game {
 
-    private  char[] solution;
+    private char[] solution;
+    private DigitRecherche[] digitRecherches;
+
 
 
     @Override
@@ -14,55 +15,77 @@ public class GameRecherche extends Game {
         return "RECHERCHE";
     }
 
-    private static final Logger logger = (Logger) LogManager.getLogger("GameRecherche");
 
-    public GameRecherche(){
+    public GameRecherche() {
         super();
         this.solution = new char[this.getNbCases()];
         Random r = new Random();
         String alphabet = "1234567890";
-        for(int i = 0; i < solution.length; i++){
+        for (int i = 0; i < solution.length; i++) {
             this.solution[i] = alphabet.charAt(r.nextInt(alphabet.length()));
         }
 
-        logger.info("la solution est: " + this.ShowSoluce());
+        if (this.isDebugMode()) {
+            logger.info("la solution est: " + this.ShowSoluce());
+        }
+        this.digitRecherches = new DigitRecherche[this.getNbCases()];
+
+        for (int i = 0; i < this.getNbCases(); i++){
+            this.digitRecherches[i] = new DigitRecherche();
+        }
+
+
+
     }
 
-    public String ShowSoluce(){
+    @Override
+    public String ShowSoluce() {
         return new String(this.solution);
     }
 
     @Override
-    public String checkPropal(String propal){
+    public String checkPropal(String propal) {
         StringBuilder reponse = new StringBuilder();
-        char[] proposition = propal.toCharArray();
+        char[] propArray = propal.toCharArray();
 
-        if (this.solution.length != propal.length()){
+        if (this.solution.length != propal.length() || !StringUtils.isNumeric(propal)) {
             this.setError("Votre proposition doit comporter\n exactement " + this.solution.length + " chiffres");
-        }
-        else {
-            for(int i = 0; i < solution.length; i++){
+        } else {
+            for (int i = 0; i < solution.length; i++) {
                 int sol = Character.getNumericValue(solution[i]);
-                int prop = Character.getNumericValue(proposition[i]);
+                int prop = Character.getNumericValue(propArray[i]);
 
-                if(prop == sol){
+                if (prop == sol) {
                     reponse.append("=");
                 }
-                if(prop > sol){
+                if (prop > sol) {
                     reponse.append("-");
                 }
-                if(prop < sol){
+                if (prop < sol) {
                     reponse.append("+");
                 }
 
             }
-            if (reponse.toString().equals("====="))
-            {
+            if (this.ShowSoluce().equals(propal)) {
                 return "Gagné !";
             }
         }
         return reponse.toString();
     }
 
+    public void handleResponse(String response){
+        for(int i = 0; i <= this.getNbCases(); i++)
+        {
+            char c = response.charAt(i);
+            this.digitRecherches[i].adjustLimits(c);
+        }
+    }
 
+    public boolean win(String response){
+        return response.contains("=") && !response.contains("+") && !response.contains("-");
+    }
+
+    public void computerPlay(){
+
+    }
 }
