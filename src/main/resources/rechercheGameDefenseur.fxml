@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="338.0" prefWidth="440.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projet3.controller.RechercheGameController">
+<AnchorPane prefHeight="338.0" prefWidth="440.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projet3.controller.RechercheDefenseurGameController">
     <Label fx:id="result" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="69.0" text="****" textAlignment="CENTER">
         <font>
          <Font size="48.0" />
