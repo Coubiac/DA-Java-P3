@@ -18,6 +18,8 @@ public class GameRecherche extends Game {
 
     public GameRecherche() {
         super();
+
+        //On crée une combinaison aléatoire qui servira de solution (mode challenger)
         this.solution = new char[this.getNbCases()];
         Random r = new Random();
         String alphabet = "1234567890";
@@ -28,6 +30,8 @@ public class GameRecherche extends Game {
         if (this.isDebugMode()) {
             logger.info("la solution est: " + this.ShowSoluce());
         }
+
+        //on prépare les Chiffres pour le mode défenseur
         this.digitRecherches = new DigitRecherche[this.getNbCases()];
 
         for (int i = 0; i < this.getNbCases(); i++){
@@ -73,19 +77,35 @@ public class GameRecherche extends Game {
         return reponse.toString();
     }
 
+    private boolean isResponseOk(String str){
+        if (this.getNbCases() != str.length()){return false;}
+        return str.matches("[+-=]*");
+    }
+
     public void handleResponse(String response){
-        for(int i = 0; i <= this.getNbCases(); i++)
-        {
-            char c = response.charAt(i);
-            this.digitRecherches[i].adjustLimits(c);
+        if(isResponseOk(response)){
+            this.setError("");
+            for(int i = 0; i < this.getNbCases(); i++)
+            {
+                char c = response.charAt(i);
+                this.digitRecherches[i].adjustLimits(c);
+            }
         }
+        else this.setError("votre réponse est incorrecte");
+
+    }
+
+    public StringBuilder proposeCombinaison(){
+        StringBuilder newCombinaison = new StringBuilder();
+        for(int i = 0; i < this.getNbCases(); i++)
+        {
+            newCombinaison.append(this.digitRecherches[i].getComputerTry());
+        }
+        return newCombinaison;
     }
 
     public boolean win(String response){
-        return response.contains("=") && !response.contains("+") && !response.contains("-");
+        return response.contains("=") && !response.contains("+") && !response.contains("-") && response.length() == this.getNbCases();
     }
 
-    public void computerPlay(){
-
-    }
 }

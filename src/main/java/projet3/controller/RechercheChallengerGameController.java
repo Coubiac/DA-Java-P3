@@ -1,5 +1,6 @@
 package projet3.controller;
 
+
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -17,17 +18,11 @@ public class RechercheChallengerGameController {
     private Game game;
 
 
-
-    private Stage handleStage(ActionEvent actionEvent){
+    public void submit(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         GameFactory gameFactory = (GameFactory) stage.getUserData();
         this.game = gameFactory.getGame();
         stage.setTitle(game.toString());
-        return stage;
-    }
-
-    public void submit(ActionEvent actionEvent) {
-        this.handleStage(actionEvent);
         String propalSoluce = propal.getText();
         result.setText(game.checkPropal(propalSoluce));
         error.setText(game.showError());

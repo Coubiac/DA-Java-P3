@@ -25,7 +25,7 @@ public class ChooseModeController {
             logger.info(gameFactory.getMode().toString());
         }
 
-        Scene scene;
+        Scene scene ;
         FXMLLoader loader;
 
         if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getMode() instanceof ChallengerMode){
@@ -33,6 +33,7 @@ public class ChooseModeController {
         }
         else if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getMode() instanceof DefenseurMode){
             loader = new FXMLLoader(getClass().getResource("/rechercheGameDefenseur.fxml"));
+
         }
         else if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getMode() instanceof DuelMode){
             loader = new FXMLLoader(getClass().getResource("/rechercheGameDuel.fxml"));
@@ -54,6 +55,7 @@ public class ChooseModeController {
         scene = new Scene((Parent) loader.load());
         stage.setUserData(gameFactory);
         stage.setScene(scene);
+
     }
 
 
@@ -62,11 +64,11 @@ public class ChooseModeController {
     }
 
     public void chooseChallenger(ActionEvent actionEvent) throws IOException {
-
         this.handleGameMode(actionEvent, new ChallengerMode());
     }
 
     public void chooseDefenseur(ActionEvent actionEvent) throws IOException {
         this.handleGameMode(actionEvent, new DefenseurMode());
+
     }
 }

@@ -26,6 +26,7 @@ public class NewGameController extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         GameFactory gameFactory = new GameFactory();
+        primaryStage.setResizable(false);
         primaryStage.setUserData(gameFactory);
         Parent root = FXMLLoader.load(getClass().getResource("/chooseGame.fxml"));
         primaryStage.setTitle("Game P3");

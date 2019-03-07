@@ -58,6 +58,7 @@ public class DigitRecherche extends Digit {
         this.computerTry = computerTry;
     }
 
+    //On prépare la prochaine tentative
     private void setComputerNextTry(){
         this.setComputerTry(this.getMinLimit() + (this.getMaxLimit()-this.getMinLimit())/2);
     }
