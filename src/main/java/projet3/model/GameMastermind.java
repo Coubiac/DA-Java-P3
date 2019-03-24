@@ -6,4 +6,9 @@ public class GameMastermind extends Game {
     public String toString() {
         return "MASTERMIND";
     }
+
+    @Override
+    public boolean ChallengerWin(String text) {
+        return false;
+    }
 }

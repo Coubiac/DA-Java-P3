@@ -53,6 +53,7 @@ public class GameRecherche extends Game {
         char[] propArray = propal.toCharArray();
 
         if (this.solution.length != propal.length() || !StringUtils.isNumeric(propal)) {
+            logger.error("Votre proposition ("+ propal +") doit comporter\\n exactement \" + this.solution.length + \" chiffres");
             this.setError("Votre proposition doit comporter\n exactement " + this.solution.length + " chiffres");
         } else {
             for (int i = 0; i < solution.length; i++) {
@@ -70,16 +71,24 @@ public class GameRecherche extends Game {
                 }
 
             }
-            if (this.ShowSoluce().equals(propal)) {
-                return "Gagné !";
-            }
         }
         return reponse.toString();
     }
 
     private boolean isResponseOk(String str){
-        if (this.getNbCases() != str.length()){return false;}
-        return str.matches("[+-=]*");
+
+        if (str.matches("^[=+-]+$") && str.length() == this.getNbCases()){
+            return true;
+
+        }
+        else if (str.matches("^[=+-]+$")){
+            logger.error("la reponse contient " + str.length() + " chiffres sur " + this.getNbCases());
+            return false;
+        }
+        else{
+            logger.error("REPONSE: "+ str +" .la réponse ne doit contenir que les caractère +, -, = .");
+            return false;
+        }
     }
 
     public void handleResponse(String response){
@@ -104,8 +113,16 @@ public class GameRecherche extends Game {
         return newCombinaison;
     }
 
-    public boolean win(String response){
-        return response.contains("=") && !response.contains("+") && !response.contains("-") && response.length() == this.getNbCases();
+    public boolean DefenseurWin(String response){
+
+        return response.matches("^[=]+$") && response.length() == this.getNbCases();
     }
+
+
+    public boolean ChallengerWin(String propal){
+        return propal.matches("^[=]+$");
+    }
+
+
 
 }

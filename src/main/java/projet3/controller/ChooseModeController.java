@@ -29,30 +29,48 @@ public class ChooseModeController {
         FXMLLoader loader;
 
         if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getMode() instanceof ChallengerMode){
-            loader = new FXMLLoader(getClass().getResource("/rechercheGameChallenger.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/rechercheChallengerGameVue.fxml"));
+            scene = new Scene((Parent) loader.load());
+            RechercheChallengerGameController controller = loader.getController();
+            if(gameFactory.getGame().isDebugMode()){
+                controller.setTextToSoluce("Solution: " + ((GameRecherche) gameFactory.getGame()).ShowSoluce());
+            }
+
         }
         else if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getMode() instanceof DefenseurMode){
-            loader = new FXMLLoader(getClass().getResource("/rechercheGameDefenseur.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/rechercheDefenseurGameVue.fxml"));
+            scene = new Scene((Parent) loader.load());
+            RechercheDefenseurGameController controller = loader.getController();
+            controller.setTextToResult(((GameRecherche) gameFactory.getGame()).proposeCombinaison().toString());
+
 
         }
         else if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getMode() instanceof DuelMode){
-            loader = new FXMLLoader(getClass().getResource("/rechercheGameDuel.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/rechercheDuelGameVue.fxml"));
+            scene = new Scene((Parent) loader.load());
+            RechercheDuelGameController controller = loader.getController();
+            controller.setTextToResult(((GameRecherche) gameFactory.getGame()).proposeCombinaison().toString());
+            if(gameFactory.getGame().isDebugMode()){
+                controller.setTextToSoluce("Solution: " + ((GameRecherche) gameFactory.getGame()).ShowSoluce());
+            }
         }
         else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getMode() instanceof ChallengerMode){
             loader = new FXMLLoader(getClass().getResource("/mastermindGameChallenger.fxml"));
+            scene = new Scene((Parent) loader.load());
         }
         else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getMode() instanceof DefenseurMode){
             loader = new FXMLLoader(getClass().getResource("/mastermindGameDefenseur.fxml"));
+            scene = new Scene((Parent) loader.load());
         }
         else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getMode() instanceof DuelMode){
             loader = new FXMLLoader(getClass().getResource("/mastermindGameDuel.fxml"));
+            scene = new Scene((Parent) loader.load());
         }
         else {
             logger.error("Le jeu ne fait pas partie de la liste possible");
             throw new IllegalArgumentException();
         }
 
-        scene = new Scene((Parent) loader.load());
         stage.setUserData(gameFactory);
         stage.setScene(scene);
 

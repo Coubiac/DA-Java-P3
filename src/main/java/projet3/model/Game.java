@@ -12,6 +12,7 @@ public abstract class Game implements GameInterface{
     private Integer nbCases;
     private Integer nbEssais;
     private Boolean debugMode;
+    private Boolean endGame;
     private String error = null;
     static final Logger logger = (Logger) LogManager.getLogger("Game");
 
@@ -85,4 +86,6 @@ public abstract class Game implements GameInterface{
     public void setDebugMode(Boolean debugMode) {
         this.debugMode = debugMode;
     }
+
+    public abstract boolean ChallengerWin(String text);
 }
