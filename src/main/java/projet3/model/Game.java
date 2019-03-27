@@ -12,7 +12,6 @@ public abstract class Game implements GameInterface{
     private Integer nbCases;
     private Integer nbEssais;
     private Boolean debugMode;
-    private Boolean endGame;
     private String error = null;
     static final Logger logger = (Logger) LogManager.getLogger("Game");
 
