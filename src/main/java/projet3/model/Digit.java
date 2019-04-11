@@ -1,5 +1,8 @@
 package projet3.model;
 
+/**
+ * Un digit représente un nombre. Il possède au moins une valeur.
+ */
 public abstract class Digit {
 
     private int value;

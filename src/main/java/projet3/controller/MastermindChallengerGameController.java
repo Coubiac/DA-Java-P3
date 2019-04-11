@@ -8,48 +8,61 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import projet3.model.Game;
 import projet3.model.GameFactory;
-import projet3.model.GameRecherche;
+import projet3.model.GameMastermind;
 
-public class RechercheChallengerGameController {
+import java.util.List;
+
+public class MastermindChallengerGameController {
     public Label result;
     public TextField propal;
     public Button submit;
     public Label error;
     public Label soluce;
     public Label nbEssais;
-    private Game game;
+    public Label log;
+    private GameMastermind game;
     private Stage stage;
 
 
     public void submit(ActionEvent actionEvent) {
         this.stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         GameFactory gameFactory = (GameFactory) stage.getUserData();
-        this.game = gameFactory.getGame();
+        this.game = (GameMastermind) gameFactory.getGame();
 
         this.stage.setTitle(this.game.toString());
-        String propalSoluce = propal.getText();
-        result.setText(this.game.checkPropal(propalSoluce));
-        error.setText(this.game.showError());
-        this.game.setNbEssais(this.game.getNbEssais() - 1);
-        nbEssais.setText("Essais restant: "+ this.game.getNbEssais().toString());
 
-        if (this.game.ChallengerWin(this.game.checkPropal(propalSoluce))){
-            this.HumanWinAction();
+        if(this.game.isResponseOk(this.propal.getText())){
+            error.setText("");
+            List<Integer> propalSoluce =  this.game.handleResponse(this.propal.getText());
+            int score = this.game.Score(propalSoluce);
+            result.setText(String.valueOf(score));
+            this.log.setText(this.log.getText() + this.propal.getText()+ " : " + result.getText() + "\n");
+            if(this.game.ChallengerWin(result.getText())){
+                this.HumanWinAction();
+            }
+            this.game.setNbEssais(this.game.getNbEssais() - 1);
+            nbEssais.setText("Essais restant: "+ this.game.getNbEssais().toString());
+            if (this.game.getNbEssais() == 0){
+                this.ComputerWinAction();
+            }
         }
-        if (this.game.getNbEssais() == 0){
-            this.ComputerWinAction();
+        else {
+            error.setText(this.game.showError());
         }
+
+
 
     }
 
-    public void setTextToSoluce(String text) {
+    void setTextToSoluce(String text) {
         soluce.setText(text);
     }
 
-    public void HumanWinAction(){
+    private void HumanWinAction(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Fin de la partie");
         alert.setHeaderText(null);
@@ -66,11 +79,11 @@ public class RechercheChallengerGameController {
         });
     }
 
-    public void ComputerWinAction(){
+    private void ComputerWinAction(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Fin de la partie");
         alert.setHeaderText(null);
-        alert.setContentText("J'ai gagné ! \n La solution était" + this.game.ShowSoluce());
+        alert.setContentText("J'ai gagné ! \n La solution était " + this.game.ShowSoluce());
 
         alert.showAndWait();
         this.stage.close();

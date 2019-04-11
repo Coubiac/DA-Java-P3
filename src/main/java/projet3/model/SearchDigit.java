@@ -1,20 +1,26 @@
 package projet3.model;
 
-public class DigitRecherche extends Digit {
+/**
+ *  SearchDigit represents one of the numbers of the solution the computer is looking for in the game Search in Defender or DUEL mode
+ */
+class SearchDigit extends Digit {
 
     private int maxLimit;
     private  int minLimit;
     private int computerTry;
-    private int position;
 
-
-    public DigitRecherche(){
+    public SearchDigit(){
         this.setComputerTry(5);
         this.setMaxLimit(9);
         this.setMinLimit(0);
     }
 
 
+    /**
+     * Adjusts the limit values of this digitrecherche according to the response of the human player
+     * @param responseChar
+     *                      The human player's answer: +, -,, =
+     */
     void adjustLimits(char responseChar){
         switch (responseChar){
             case '+':
@@ -30,6 +36,8 @@ public class DigitRecherche extends Digit {
                 this.setMinLimit(this.getComputerTry());
                 this.setValue(this.getComputerTry());
                 break;
+            default:
+                throw new IllegalArgumentException("responseChar must be +, - or =");
         }
     }
 
@@ -58,7 +66,9 @@ public class DigitRecherche extends Digit {
         this.computerTry = computerTry;
     }
 
-    //On prépare la prochaine tentative
+    /**
+     * The next attempt is prepared with the number between the min and max limits
+     */
     private void setComputerNextTry(){
         this.setComputerTry(this.getMinLimit() + (this.getMaxLimit()-this.getMinLimit())/2);
     }

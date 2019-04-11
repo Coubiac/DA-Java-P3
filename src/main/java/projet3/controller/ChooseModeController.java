@@ -57,6 +57,11 @@ public class ChooseModeController {
         else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getMode() instanceof ChallengerMode){
             loader = new FXMLLoader(getClass().getResource("/mastermindGameChallenger.fxml"));
             scene = new Scene((Parent) loader.load());
+            MastermindChallengerGameController controller = loader.getController();
+            if(gameFactory.getGame().isDebugMode()){
+                controller.setTextToSoluce("Solution: " + ((GameMastermind) gameFactory.getGame()).ShowSoluce());
+            }
+
         }
         else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getMode() instanceof DefenseurMode){
             loader = new FXMLLoader(getClass().getResource("/mastermindGameDefenseur.fxml"));

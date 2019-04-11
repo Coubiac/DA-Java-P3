@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 public class GameRecherche extends Game {
 
     private char[] solution;
-    private DigitRecherche[] digitRecherches;
+    private SearchDigit[] digitRecherches;
 
 
 
@@ -32,10 +32,10 @@ public class GameRecherche extends Game {
         }
 
         //on prépare les Chiffres pour le mode défenseur
-        this.digitRecherches = new DigitRecherche[this.getNbCases()];
+        this.digitRecherches = new SearchDigit[this.getNbCases()];
 
         for (int i = 0; i < this.getNbCases(); i++){
-            this.digitRecherches[i] = new DigitRecherche();
+            this.digitRecherches[i] = new SearchDigit();
         }
 
 
@@ -53,12 +53,13 @@ public class GameRecherche extends Game {
         char[] propArray = propal.toCharArray();
 
         if (this.solution.length != propal.length() || !StringUtils.isNumeric(propal)) {
-            logger.error("Votre proposition ("+ propal +") doit comporter\\n exactement \" + this.solution.length + \" chiffres");
-            this.setError("Votre proposition doit comporter\n exactement " + this.solution.length + " chiffres");
+            String error = "Votre proposition ("+ propal + ") doit comporter exactement " + this.solution.length + " chiffres";
+            logger.error(error);
+            this.setError(error);
         } else {
             for (int i = 0; i < solution.length; i++) {
                 int sol = Character.getNumericValue(solution[i]);
-                int prop = Character.getNumericValue(propArray[i]);
+                int prop = Character.getNumericValue(propArray[i]);;
 
                 if (prop == sol) {
                     reponse.append("=");

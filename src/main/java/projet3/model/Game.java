@@ -13,6 +13,7 @@ public abstract class Game implements GameInterface{
     private Integer nbEssais;
     private Boolean debugMode;
     private String error = null;
+    Properties prop;
     static final Logger logger = (Logger) LogManager.getLogger("Game");
 
 
@@ -36,15 +37,15 @@ public abstract class Game implements GameInterface{
     }
 
     Game(){
-        Properties prop = new Properties();
+        this.prop = new Properties();
         InputStream input = null;
         try {
 
             input = ClassLoader.getSystemClassLoader().getResourceAsStream("config.properties");
-            prop.load(input);
+            this.prop.load(input);
 
             // Verification si débug mode est activé
-            this.debugMode = Boolean.parseBoolean(prop.getProperty("debugMode"));
+            this.debugMode = Boolean.parseBoolean(this.prop.getProperty("debugMode"));
 
             this.setNbCases(Integer.parseInt(prop.getProperty("nbCases")));
             this.setNbEssais(Integer.parseInt(prop.getProperty("nbEssais")));

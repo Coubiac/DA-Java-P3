@@ -1,5 +1,8 @@
 package projet3.model;
 
+/**
+ * A class to prepare the game.
+ */
 public class GameFactory  {
 
     private Game game;
