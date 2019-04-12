@@ -5,7 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 
 public class GameRecherche extends Game {
 
+    /**
+     * random combination that will serve as a solution (challenger mode)
+     */
     private char[] solution;
+    /**
+     * Digits array for dual mode.
+     */
     private SearchDigit[] digitRecherches;
 
 
@@ -16,8 +22,15 @@ public class GameRecherche extends Game {
     }
 
 
+    /**
+     * The constructor initializes the properties of the configuration file and prepares a random combination
+     * for the challenger mode solution. It also prepares an array of "digits" of the size of the number of boxes (configuration file) for the defender mode.
+     */
     public GameRecherche() {
         super();
+
+            this.setNbCases(Integer.parseInt(prop.getProperty("nbCases")));
+            this.setNbEssais(Integer.parseInt(prop.getProperty("nbEssais")));
 
         //On crée une combinaison aléatoire qui servira de solution (mode challenger)
         this.solution = new char[this.getNbCases()];
@@ -47,6 +60,13 @@ public class GameRecherche extends Game {
         return new String(this.solution);
     }
 
+    /**
+     * Analysis of the player's proposal and return of the result
+     * @param propal
+     *               player proposition for the challenger mode
+     * @return String response
+     *                  computer response
+     */
     @Override
     public String checkPropal(String propal) {
         StringBuilder reponse = new StringBuilder();
@@ -76,6 +96,12 @@ public class GameRecherche extends Game {
         return reponse.toString();
     }
 
+    /**
+     * Defender mode: Verifies that the human player's response has the correct number of characters and only has +, - or = characters
+     * @param str
+     *            Human player response to the computer proposal.
+     * @return Boolean
+     */
     private boolean isResponseOk(String str){
 
         if (str.matches("^[=+-]+$") && str.length() == this.getNbCases()){
@@ -105,6 +131,11 @@ public class GameRecherche extends Game {
 
     }
 
+    /**
+     * Defenseur mode: Proposes a new combination
+     * @return Stringbuilder
+     *                       New combination
+     */
     public StringBuilder proposeCombinaison(){
         StringBuilder newCombinaison = new StringBuilder();
         for(int i = 0; i < this.getNbCases(); i++)

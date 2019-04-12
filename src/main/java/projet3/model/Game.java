@@ -36,6 +36,9 @@ public abstract class Game implements GameInterface{
         this.error = error;
     }
 
+    /**
+     * This constructor reads the configuration file and initializes the different variables
+     */
     Game(){
         this.prop = new Properties();
         InputStream input = null;
@@ -47,8 +50,6 @@ public abstract class Game implements GameInterface{
             // Verification si débug mode est activé
             this.debugMode = Boolean.parseBoolean(this.prop.getProperty("debugMode"));
 
-            this.setNbCases(Integer.parseInt(prop.getProperty("nbCases")));
-            this.setNbEssais(Integer.parseInt(prop.getProperty("nbEssais")));
 
         } catch (IOException ex) {
             ex.printStackTrace();

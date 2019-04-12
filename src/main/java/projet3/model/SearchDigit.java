@@ -21,7 +21,7 @@ public class SearchDigit extends Digit {
      * @param responseChar
      *                      The human player's answer (+,- or =)
      */
-    public void adjustLimits(char responseChar){
+    void adjustLimits(char responseChar){
         switch (responseChar){
             case '+':
                 this.setMinLimit(this.getComputerTry());
@@ -58,18 +58,18 @@ public class SearchDigit extends Digit {
         this.minLimit = minLimit;
     }
 
-    public int getComputerTry() {
+    int getComputerTry() {
         return computerTry;
     }
 
-    public void setComputerTry(int computerTry) {
+    private void setComputerTry(int computerTry) {
         this.computerTry = computerTry;
     }
 
     /**
      * The next attempt is prepared with the number between the min and max limits
      */
-    public void setComputerNextTry(){
+    private void setComputerNextTry(){
         this.setComputerTry(this.getMinLimit() + (this.getMaxLimit()-this.getMinLimit())/2);
     }
 }
