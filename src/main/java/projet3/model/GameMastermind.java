@@ -15,9 +15,9 @@ public class GameMastermind extends Game {
     public GameMastermind(){
         super();
 
-        this.nbCoul = Integer.parseInt(this.prop.getProperty("nbCoul"));
-        this.nbTrous = Integer.parseInt(this.prop.getProperty("nbTrous"));
-        this.secret = new ArrayList<Integer>();
+        this.nbEssais = this.configFile.getMMnbEssais();
+        this.nbCoul = this.configFile.getMMnbCoul();
+        this.nbTrous = this.configFile.getMMnbTrous();
         this.secret = generateCode(this.nbTrous,this.nbCoul);
         logger.info("la solution est: " + this.ShowSoluce());
 
@@ -37,10 +37,13 @@ public class GameMastermind extends Game {
     @Override
     public boolean ChallengerWin(String score) {
         Integer scoreNumber = Integer.parseInt(score);
-        if (scoreNumber.equals(10 * nbTrous)){
-            return true;
-        }
-        return false;
+        return scoreNumber.equals(10 * nbTrous);
+    }
+    @Override
+    public String checkPropal(String propal){
+        List<Integer> propalSoluce =  this.handleResponse(propal);
+        int score = this.Score(propalSoluce);
+        return String.valueOf(score);
     }
 
     private List<Integer> generateCode(int nbTrous, int nbCoul){
@@ -60,7 +63,9 @@ public class GameMastermind extends Game {
 
     }
 
-    public Integer Score(List<Integer> Propal){
+
+
+    private Integer Score(List<Integer> Propal){
         int r=0;
         for (int i = 0; i < this.nbTrous; i++){
             if(this.secret.get(i).equals(Propal.get(i))){
@@ -114,7 +119,7 @@ public class GameMastermind extends Game {
         }
     }
 
-    public List<Integer> handleResponse(String propal){
+    private List<Integer> handleResponse(String propal){
 
         int[] tempArray = new int[propal.length()];
         for (int i = 0; i < propal.length(); i++)
@@ -131,15 +136,11 @@ public class GameMastermind extends Game {
 
 
 
-    public Integer getNbCoul(){
+    private Integer getNbCoul(){
         return nbCoul;
     }
 
-    public Integer getNbTrous() {
+    private Integer getNbTrous() {
         return nbTrous;
-    }
-
-    public void setNbTrous(Integer nbTrous) {
-        this.nbTrous = nbTrous;
     }
 }

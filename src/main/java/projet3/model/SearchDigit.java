@@ -3,10 +3,11 @@ package projet3.model;
 /**
  *  SearchDigit represents one of the numbers of the solution the computer is looking for in the game Search in Defender or DUEL mode
  */
-public class SearchDigit extends Digit {
+public class SearchDigit  {
 
     private int maxLimit;
     private  int minLimit;
+    private int value;
     private int computerTry;
 
     SearchDigit(){
@@ -71,5 +72,8 @@ public class SearchDigit extends Digit {
      */
     private void setComputerNextTry(){
         this.setComputerTry(this.getMinLimit() + (this.getMaxLimit()-this.getMinLimit())/2);
+    }
+    public void setValue(int value) {
+        this.value = value;
     }
 }

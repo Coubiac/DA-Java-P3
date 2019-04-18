@@ -16,6 +16,7 @@ public class GameRecherche extends Game {
 
 
 
+
     @Override
     public String toString() {
         return "RECHERCHE";
@@ -28,26 +29,24 @@ public class GameRecherche extends Game {
      */
     public GameRecherche() {
         super();
-
-            this.setNbCases(Integer.parseInt(prop.getProperty("nbCases")));
-            this.setNbEssais(Integer.parseInt(prop.getProperty("nbEssais")));
+        this.setNbEssais(this.configFile.getRechercheNbEssais());
 
         //On crée une combinaison aléatoire qui servira de solution (mode challenger)
-        this.solution = new char[this.getNbCases()];
+        this.solution = new char[this.configFile.getRechercheNbCases()];
         Random r = new Random();
         String alphabet = "1234567890";
         for (int i = 0; i < solution.length; i++) {
             this.solution[i] = alphabet.charAt(r.nextInt(alphabet.length()));
         }
 
-        if (this.isDebugMode()) {
+        if (this.configFile.isDebugMode()) {
             logger.info("la solution est: " + this.ShowSoluce());
         }
 
         //on prépare les Chiffres pour le mode défenseur
-        this.digitRecherches = new SearchDigit[this.getNbCases()];
+        this.digitRecherches = new SearchDigit[this.configFile.getRechercheNbCases()];
 
-        for (int i = 0; i < this.getNbCases(); i++){
+        for (int i = 0; i < this.configFile.getRechercheNbCases(); i++){
             this.digitRecherches[i] = new SearchDigit();
         }
 
@@ -104,12 +103,12 @@ public class GameRecherche extends Game {
      */
     private boolean isResponseOk(String str){
 
-        if (str.matches("^[=+-]+$") && str.length() == this.getNbCases()){
+        if (str.matches("^[=+-]+$") && str.length() == this.configFile.getRechercheNbCases()){
             return true;
 
         }
         else if (str.matches("^[=+-]+$")){
-            logger.error("la reponse contient " + str.length() + " chiffres sur " + this.getNbCases());
+            logger.error("la reponse contient " + str.length() + " chiffres sur " + this.configFile.getRechercheNbCases());
             return false;
         }
         else{
@@ -121,7 +120,7 @@ public class GameRecherche extends Game {
     public void handleResponse(String response){
         if(isResponseOk(response)){
             this.setError("");
-            for(int i = 0; i < this.getNbCases(); i++)
+            for(int i = 0; i < this.configFile.getRechercheNbCases(); i++)
             {
                 char c = response.charAt(i);
                 this.digitRecherches[i].adjustLimits(c);
@@ -138,7 +137,7 @@ public class GameRecherche extends Game {
      */
     public StringBuilder proposeCombinaison(){
         StringBuilder newCombinaison = new StringBuilder();
-        for(int i = 0; i < this.getNbCases(); i++)
+        for(int i = 0; i < this.configFile.getRechercheNbCases(); i++)
         {
             newCombinaison.append(this.digitRecherches[i].getComputerTry());
         }
@@ -147,14 +146,12 @@ public class GameRecherche extends Game {
 
     public boolean DefenseurWin(String response){
 
-        return response.matches("^[=]+$") && response.length() == this.getNbCases();
+        return response.matches("^[=]+$") && response.length() == this.configFile.getRechercheNbCases();
     }
 
 
     public boolean ChallengerWin(String propal){
         return propal.matches("^[=]+$");
     }
-
-
 
 }

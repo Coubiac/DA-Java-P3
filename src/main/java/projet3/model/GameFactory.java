@@ -6,7 +6,7 @@ package projet3.model;
 public class GameFactory  {
 
     private Game game;
-    private Mode mode;
+    private GameMode gameMode;
 
 
     public Game getGame() {
@@ -17,15 +17,11 @@ public class GameFactory  {
         this.game = game;
     }
 
-    public Mode getMode() {
-        return mode;
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
-    public void setMode(Mode mode) {
-        this.mode = mode;
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
     }
-
-
-
-
 }

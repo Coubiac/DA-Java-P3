@@ -28,7 +28,7 @@ public class ChooseGameController {
     private void handleGame(Game game, Stage stage, FXMLLoader loader) throws IOException {
         GameFactory gameFactory = (GameFactory) stage.getUserData();
         gameFactory.setGame(game);
-        if(gameFactory.getGame().isDebugMode()){
+        if(gameFactory.getGame().getConfigFile().isDebugMode()){
             logger.info(gameFactory.getGame().toString());
         }
         stage.setUserData(gameFactory);

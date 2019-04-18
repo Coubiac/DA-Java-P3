@@ -8,13 +8,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import projet3.model.GameFactory;
 import projet3.model.GameMastermind;
 
-import java.util.List;
 
 public class MastermindChallengerGameController {
     public Label result;
@@ -37,9 +34,7 @@ public class MastermindChallengerGameController {
 
         if(this.game.isResponseOk(this.propal.getText())){
             error.setText("");
-            List<Integer> propalSoluce =  this.game.handleResponse(this.propal.getText());
-            int score = this.game.Score(propalSoluce);
-            result.setText(String.valueOf(score));
+            result.setText(this.game.checkPropal(this.propal.getText()));
             this.log.setText(this.log.getText() + this.propal.getText()+ " : " + result.getText() + "\n");
             if(this.game.ChallengerWin(result.getText())){
                 this.HumanWinAction();

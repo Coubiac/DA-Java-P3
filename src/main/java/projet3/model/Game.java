@@ -9,12 +9,13 @@ import java.util.Properties;
 
 public abstract class Game implements GameInterface{
 
-    private Integer nbCases;
-    private Integer nbEssais;
-    private Boolean debugMode;
+    ConfigReader configFile;
+
+
     private String error = null;
     Properties prop;
     static final Logger logger = (Logger) LogManager.getLogger("Game");
+    protected Integer nbEssais;
 
 
     @Override
@@ -40,36 +41,15 @@ public abstract class Game implements GameInterface{
      * This constructor reads the configuration file and initializes the different variables
      */
     Game(){
-        this.prop = new Properties();
-        InputStream input = null;
-        try {
-
-            input = ClassLoader.getSystemClassLoader().getResourceAsStream("config.properties");
-            this.prop.load(input);
-
-            // Verification si débug mode est activé
-            this.debugMode = Boolean.parseBoolean(this.prop.getProperty("debugMode"));
+        this.configFile = ConfigReader.getInstance();
 
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
-    public Integer getNbCases() {
-        return nbCases;
-    }
+    public abstract boolean ChallengerWin(String text);
 
-    public void setNbCases(Integer nbCases) {
-        this.nbCases = nbCases;
+    public ConfigReader getConfigFile() {
+        return configFile;
     }
 
     public Integer getNbEssais() {
@@ -79,14 +59,4 @@ public abstract class Game implements GameInterface{
     public void setNbEssais(Integer nbEssais) {
         this.nbEssais = nbEssais;
     }
-
-    public Boolean isDebugMode() {
-        return debugMode;
-    }
-
-    public void setDebugMode(Boolean debugMode) {
-        this.debugMode = debugMode;
-    }
-
-    public abstract boolean ChallengerWin(String text);
 }

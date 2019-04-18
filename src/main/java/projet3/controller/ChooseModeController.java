@@ -16,28 +16,28 @@ public class ChooseModeController {
 
     private static final Logger logger = (Logger) LogManager.getLogger("ChooseModeController");
 
-    public void handleGameMode(ActionEvent actionEvent, Mode mode) throws IOException {
+    public void handleGameMode(ActionEvent actionEvent, GameMode gameMode) throws IOException {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         GameFactory gameFactory = (GameFactory) stage.getUserData();
-        gameFactory.setMode(mode);
-        if(gameFactory.getGame().isDebugMode()){
+        gameFactory.setGameMode(gameMode);
+        if(gameFactory.getGame().getConfigFile().isDebugMode()){
             logger.info("Mode Debug !");
-            logger.info(gameFactory.getMode().toString());
+            logger.info(gameFactory.getGameMode().toString());
         }
 
         Scene scene ;
         FXMLLoader loader;
 
-        if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getMode() instanceof ChallengerMode){
+        if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getGameMode() == GameMode.CHALLENGER){
             loader = new FXMLLoader(getClass().getResource("/rechercheChallengerGameVue.fxml"));
             scene = new Scene((Parent) loader.load());
             RechercheChallengerGameController controller = loader.getController();
-            if(gameFactory.getGame().isDebugMode()){
+            if(gameFactory.getGame().getConfigFile().isDebugMode()){
                 controller.setTextToSoluce("Solution: " + ((GameRecherche) gameFactory.getGame()).ShowSoluce());
             }
 
         }
-        else if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getMode() instanceof DefenseurMode){
+        else if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getGameMode() == GameMode.DEFENSEUR){
             loader = new FXMLLoader(getClass().getResource("/rechercheDefenseurGameVue.fxml"));
             scene = new Scene((Parent) loader.load());
             RechercheDefenseurGameController controller = loader.getController();
@@ -45,29 +45,29 @@ public class ChooseModeController {
 
 
         }
-        else if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getMode() instanceof DuelMode){
+        else if(gameFactory.getGame() instanceof projet3.model.GameRecherche && gameFactory.getGameMode() == GameMode.DUEL){
             loader = new FXMLLoader(getClass().getResource("/rechercheDuelGameVue.fxml"));
             scene = new Scene((Parent) loader.load());
             RechercheDuelGameController controller = loader.getController();
             controller.setTextToResult(((GameRecherche) gameFactory.getGame()).proposeCombinaison().toString());
-            if(gameFactory.getGame().isDebugMode()){
+            if(gameFactory.getGame().getConfigFile().isDebugMode()){
                 controller.setTextToSoluce("Solution: " + ((GameRecherche) gameFactory.getGame()).ShowSoluce());
             }
         }
-        else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getMode() instanceof ChallengerMode){
+        else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getGameMode() == GameMode.CHALLENGER){
             loader = new FXMLLoader(getClass().getResource("/mastermindGameChallenger.fxml"));
             scene = new Scene((Parent) loader.load());
             MastermindChallengerGameController controller = loader.getController();
-            if(gameFactory.getGame().isDebugMode()){
+            if(gameFactory.getGame().getConfigFile().isDebugMode()){
                 controller.setTextToSoluce("Solution: " + ((GameMastermind) gameFactory.getGame()).ShowSoluce());
             }
 
         }
-        else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getMode() instanceof DefenseurMode){
+        else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getGameMode() == GameMode.DEFENSEUR){
             loader = new FXMLLoader(getClass().getResource("/mastermindGameDefenseur.fxml"));
             scene = new Scene((Parent) loader.load());
         }
-        else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getMode() instanceof DuelMode){
+        else if (gameFactory.getGame() instanceof projet3.model.GameMastermind && gameFactory.getGameMode() == GameMode.DUEL){
             loader = new FXMLLoader(getClass().getResource("/mastermindGameDuel.fxml"));
             scene = new Scene((Parent) loader.load());
         }
@@ -83,15 +83,15 @@ public class ChooseModeController {
 
 
     public void chooseDuel(ActionEvent actionEvent) throws IOException {
-        this.handleGameMode(actionEvent, new DuelMode());
+        this.handleGameMode(actionEvent, GameMode.DUEL);
     }
 
     public void chooseChallenger(ActionEvent actionEvent) throws IOException {
-        this.handleGameMode(actionEvent, new ChallengerMode());
+        this.handleGameMode(actionEvent, GameMode.CHALLENGER);
     }
 
     public void chooseDefenseur(ActionEvent actionEvent) throws IOException {
-        this.handleGameMode(actionEvent, new DefenseurMode());
+        this.handleGameMode(actionEvent, GameMode.DEFENSEUR);
 
     }
 }
