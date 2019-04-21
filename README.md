@@ -8,80 +8,48 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+To build the project, you need to install [Apache Maven](https://maven.apache.org/) and [JAVA JDK 8](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html)
+
+### Buildin JAR
+
+When maven is installed, you can use it to generate a jar file:
 
 ```
-Give examples
+mvn package
 ```
 
-### Installing
+### Using the program
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+You can launch the program with a double click on the jar file. 
+You need to have a config.properties file in the same directory of the program for customizing settings.
+this is an exemple of the config.properties file:
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
+#Tous les jeux
+debugMode=false
+#Mastermind
+MMnbCoul=6
+MMnbTrous=5
+MMnbEssais=10
+#Recherche
+RechercheNbCases=5
+RechercheNbEssais=10
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
+debug mode can be activated by a parameter passed from the command line or by modifying the config.properties file. Here is the parameter to pass on the command line:
 ```
-Give an example
+java -jar DA-Java-P3-1.0-SNAPSHOT.jar debug
 ```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Benoît GRISOT** - *Initial work* - [Coubiac](https://github.com/Coubiac)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc

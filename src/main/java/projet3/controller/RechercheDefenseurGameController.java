@@ -19,6 +19,7 @@ public class RechercheDefenseurGameController {
     public TextField response;
     public Button submit;
     public Label error;
+    public Label nbEssais;
     private GameRecherche game;
     private Stage stage;
 
@@ -37,13 +38,21 @@ public class RechercheDefenseurGameController {
     public void submit(ActionEvent actionEvent) {
         this.handleStage(actionEvent);
         String responseText = response.getText();
-        if (game.DefenseurWin(responseText)){
-            computerWinAction();
+        if (game.isResponseOk(responseText)){
+            if (game.DefenseurWin(responseText)){
+                computerWinAction();
 
-        }
-        else{
-            game.handleResponse(responseText);
-            result.setText(game.proposeCombinaison().toString());
+            }
+            else{
+                game.handleResponse(responseText);
+                this.game.setNbEssais(this.game.getNbEssais() - 1);
+                if (this.game.getNbEssais() == 0){
+                    this.humanWinAction();
+                }
+                nbEssais.setText("Essais restant: "+ this.game.getNbEssais().toString());
+                result.setText(game.proposeCombinaison().toString());
+            }
+
         }
 
         error.setText(game.showError());
@@ -53,6 +62,22 @@ public class RechercheDefenseurGameController {
         result.setText(text);
     }
 
+    public void humanWinAction(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Fin de la partie");
+        alert.setHeaderText(null);
+        alert.setContentText("Vous avez gagné ! Bravo");
+
+        alert.showAndWait();
+        this.stage.close();
+        Platform.runLater(() -> {
+            try {
+                new NewGameController().start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     public void computerWinAction(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -70,5 +95,6 @@ public class RechercheDefenseurGameController {
             }
         });
     }
+
 
 }

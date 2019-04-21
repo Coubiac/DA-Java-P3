@@ -28,11 +28,7 @@ public class NewGameController extends Application {
     public void start(Stage primaryStage) throws Exception {
         GameFactory gameFactory = new GameFactory();
 
-        for (String s: getParameters().getRaw()){
-            if (s.equals("debug")){
-                ConfigReader.getInstance().setDebugMode(true);
-            }
-        }
+
         primaryStage.setResizable(false);
         primaryStage.setUserData(gameFactory);
         Parent root = FXMLLoader.load(getClass().getResource("/chooseGame.fxml"));

@@ -20,28 +20,32 @@ public class RechercheChallengerGameController {
     public Label error;
     public Label soluce;
     public Label nbEssais;
-    private Game game;
+    private GameRecherche game;
     private Stage stage;
 
 
     public void submit(ActionEvent actionEvent) {
         this.stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         GameFactory gameFactory = (GameFactory) stage.getUserData();
-        this.game = gameFactory.getGame();
+        this.game = (GameRecherche) gameFactory.getGame();
 
         this.stage.setTitle(this.game.toString());
         String propalSoluce = propal.getText();
-        result.setText(this.game.checkPropal(propalSoluce));
-        error.setText(this.game.showError());
-        this.game.setNbEssais(this.game.getNbEssais() - 1);
-        nbEssais.setText("Essais restant: "+ this.game.getNbEssais().toString());
+        if(this.game.controlPropal(propalSoluce)){
+            result.setText(this.game.checkPropal(propalSoluce));
+            this.game.setNbEssais(this.game.getNbEssais() - 1);
+            nbEssais.setText("Essais restant: "+ this.game.getNbEssais().toString());
+            if (this.game.ChallengerWin(this.game.checkPropal(propalSoluce))){
+                this.HumanWinAction();
+            }
+            if (this.game.getNbEssais() == 0){
+                this.ComputerWinAction();
+            }
 
-        if (this.game.ChallengerWin(this.game.checkPropal(propalSoluce))){
-            this.HumanWinAction();
         }
-        if (this.game.getNbEssais() == 0){
-            this.ComputerWinAction();
-        }
+        error.setText(this.game.showError());
+
+
 
     }
 

@@ -1,6 +1,7 @@
 package projet3.model;
 
 import java.util.Random;
+
 import org.apache.commons.lang3.StringUtils;
 
 public class GameRecherche extends Game {
@@ -12,15 +13,7 @@ public class GameRecherche extends Game {
     /**
      * Digits array for dual mode.
      */
-    private SearchDigit[] digitRecherches;
-
-
-
-
-    @Override
-    public String toString() {
-        return "RECHERCHE";
-    }
+    private SearchDigit[] searchDigits;
 
 
     /**
@@ -44,14 +37,18 @@ public class GameRecherche extends Game {
         }
 
         //on prépare les Chiffres pour le mode défenseur
-        this.digitRecherches = new SearchDigit[this.configFile.getRechercheNbCases()];
+        this.searchDigits = new SearchDigit[this.configFile.getRechercheNbCases()];
 
-        for (int i = 0; i < this.configFile.getRechercheNbCases(); i++){
-            this.digitRecherches[i] = new SearchDigit();
+        for (int i = 0; i < this.configFile.getRechercheNbCases(); i++) {
+            this.searchDigits[i] = new SearchDigit();
         }
 
 
+    }
 
+    @Override
+    public String toString() {
+        return "RECHERCHE";
     }
 
     @Override
@@ -61,96 +58,108 @@ public class GameRecherche extends Game {
 
     /**
      * Analysis of the player's proposal and return of the result
-     * @param propal
-     *               player proposition for the challenger mode
+     *
+     * @param propal player proposition for the challenger mode
      * @return String response
-     *                  computer response
+     * computer response
      */
     @Override
     public String checkPropal(String propal) {
         StringBuilder reponse = new StringBuilder();
         char[] propArray = propal.toCharArray();
+        for (int i = 0; i < solution.length; i++) {
+            int sol = Character.getNumericValue(solution[i]);
+            int prop = Character.getNumericValue(propArray[i]);
+            ;
 
-        if (this.solution.length != propal.length() || !StringUtils.isNumeric(propal)) {
-            String error = "Votre proposition ("+ propal + ") doit comporter exactement " + this.solution.length + " chiffres";
-            logger.error(error);
-            this.setError(error);
-        } else {
-            for (int i = 0; i < solution.length; i++) {
-                int sol = Character.getNumericValue(solution[i]);
-                int prop = Character.getNumericValue(propArray[i]);;
-
-                if (prop == sol) {
-                    reponse.append("=");
-                }
-                if (prop > sol) {
-                    reponse.append("-");
-                }
-                if (prop < sol) {
-                    reponse.append("+");
-                }
-
+            if (prop == sol) {
+                reponse.append("=");
+            }
+            if (prop > sol) {
+                reponse.append("-");
+            }
+            if (prop < sol) {
+                reponse.append("+");
             }
         }
         return reponse.toString();
     }
 
+    public Boolean controlPropal(String propal) {
+        if (this.solution.length != propal.length() || !StringUtils.isNumeric(propal)) {
+            String error = "Votre proposition (" + propal + ") doit comporter exactement " + this.solution.length + " chiffres";
+            logger.error(error);
+            this.setError(error);
+            return false;
+        } else return true;
+    }
+
     /**
      * Defender mode: Verifies that the human player's response has the correct number of characters and only has +, - or = characters
-     * @param str
-     *            Human player response to the computer proposal.
+     *
+     * @param str Human player response to the computer proposal.
      * @return Boolean
      */
-    private boolean isResponseOk(String str){
+    public boolean isResponseOk(String str) {
 
-        if (str.matches("^[=+-]+$") && str.length() == this.configFile.getRechercheNbCases()){
+        if (str.matches("^[=+-]+$") && str.length() == this.configFile.getRechercheNbCases()) {
+            this.setError("");
             return true;
 
-        }
-        else if (str.matches("^[=+-]+$")){
+        } else if (str.matches("^[=+-]+$")) {
             logger.error("la reponse contient " + str.length() + " chiffres sur " + this.configFile.getRechercheNbCases());
+            this.setError("votre réponse est incorrecte");
             return false;
-        }
-        else{
-            logger.error("REPONSE: "+ str +" .la réponse ne doit contenir que les caractère +, -, = .");
+        } else {
+            logger.error("REPONSE: " + str + " .la réponse ne doit contenir que les caractère +, -, = .");
+            this.setError("votre réponse est incorrecte");
             return false;
         }
     }
 
-    public void handleResponse(String response){
-        if(isResponseOk(response)){
-            this.setError("");
-            for(int i = 0; i < this.configFile.getRechercheNbCases(); i++)
-            {
-                char c = response.charAt(i);
-                this.digitRecherches[i].adjustLimits(c);
-            }
+    public void handleResponse(String response) {
+        for (int i = 0; i < this.configFile.getRechercheNbCases(); i++) {
+            char c = response.charAt(i);
+            this.searchDigits[i].adjustLimits(c);
         }
-        else this.setError("votre réponse est incorrecte");
 
     }
 
     /**
      * Defenseur mode: Proposes a new combination
+     *
      * @return Stringbuilder
-     *                       New combination
+     * New combination
      */
-    public StringBuilder proposeCombinaison(){
+    public StringBuilder proposeCombinaison() {
         StringBuilder newCombinaison = new StringBuilder();
-        for(int i = 0; i < this.configFile.getRechercheNbCases(); i++)
-        {
-            newCombinaison.append(this.digitRecherches[i].getComputerTry());
+        for (int i = 0; i < this.configFile.getRechercheNbCases(); i++) {
+            newCombinaison.append(this.searchDigits[i].getComputerTry());
         }
         return newCombinaison;
     }
 
-    public boolean DefenseurWin(String response){
-
-        return response.matches("^[=]+$") && response.length() == this.configFile.getRechercheNbCases();
+    public boolean DefenseurWin(String response) {
+        if (response.matches("^[=]+$") && response.length() == this.configFile.getRechercheNbCases()){
+            return true;
+        }
+        else{
+            boolean defenseurWin = false;
+            for (int i = 0; i < this.configFile.getRechercheNbCases(); i++) {
+                if (this.searchDigits[i].getMinLimit() == this.searchDigits[i].getMaxLimit() || this.searchDigits[i].getComputerTry() == 0 || this.searchDigits[i].getComputerTry() == 9) {
+                    defenseurWin = true;
+                }
+                else{
+                    defenseurWin = false;
+                }
+            }
+            //return response.matches("^[=]+$") && response.length() == this.configFile.getRechercheNbCases();
+            return defenseurWin;
+        }
     }
 
 
-    public boolean ChallengerWin(String propal){
+    public boolean ChallengerWin(String propal) {
         return propal.matches("^[=]+$");
     }
 

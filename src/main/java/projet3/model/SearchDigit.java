@@ -71,7 +71,13 @@ public class SearchDigit  {
      * The next attempt is prepared with the number between the min and max limits
      */
     private void setComputerNextTry(){
-        this.setComputerTry(this.getMinLimit() + (this.getMaxLimit()-this.getMinLimit())/2);
+        if(this.getMinLimit() == 8){
+            this.setComputerTry(9);
+        }
+        else{
+            this.setComputerTry(this.getMinLimit() + (this.getMaxLimit()-this.getMinLimit())/2);
+        }
+
     }
     public void setValue(int value) {
         this.value = value;
