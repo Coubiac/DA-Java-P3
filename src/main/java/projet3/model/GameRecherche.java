@@ -139,6 +139,13 @@ public class GameRecherche extends Game {
         return newCombinaison;
     }
 
+    /**
+     * Allows to check if the computer has won in defender mode. If the player's answer contains only "=" signs then the computer has won.
+     * A little trick has been put in place to prevent the player from cheating ;p
+     * @param response
+     *                  the response of the human player
+     * @return bolean
+     */
     public boolean DefenseurWin(String response) {
         if (response.matches("^[=]+$") && response.length() == this.configFile.getRechercheNbCases()){
             return true;
