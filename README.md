@@ -56,4 +56,4 @@ You can see the [javadoc here](https://coubiac.github.io/DA-Java-P3)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GPLv3 License - see the [GNU GPLv3](https://www.gnu.org/licenses/gpl.html) site for details
