@@ -40,7 +40,7 @@ debug mode can be activated by a parameter passed from the command line or by mo
 java -jar DA-Java-P3-1.0-SNAPSHOT.jar debug
 ```
 
-###code documentation
+## code documentation
 
 You can see the [javadoc here](https://coubiac.github.io/DA-Java-P3)
 
