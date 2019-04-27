@@ -13,7 +13,6 @@ public abstract class Game implements GameInterface{
 
 
     private String error = null;
-    Properties prop;
     static final Logger logger = (Logger) LogManager.getLogger("Game");
     protected Integer nbEssais;
 

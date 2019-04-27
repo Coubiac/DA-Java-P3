@@ -91,7 +91,10 @@ public class GameRecherche extends Game {
             logger.error(error);
             this.setError(error);
             return false;
-        } else return true;
+        } else {
+            this.setError("");
+            return true;
+        }
     }
 
     /**
